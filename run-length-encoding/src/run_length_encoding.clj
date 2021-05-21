@@ -22,7 +22,7 @@
        flatten
        (apply str)))
 
-(comment
+(comment ;; 2nd solution
 
   (defn run-length-encode
     [s]
@@ -41,5 +41,24 @@
                     %
                     (repeat (->> % drop-last (apply str) Integer.) (last %))))
          (apply str)))
+
+  nil)
+
+(comment ;; 3rd solution 
+
+  (ns run-length-encoding
+    (:require [clojure.string :as str]))
+
+  (defn run-length-encode
+    "encodes a string with run-length-encoding"
+    [plain-text]
+    (str/replace plain-text #"(\D)\1+"
+                 (fn [[a b]] (str (count a) b))))
+
+  (defn run-length-decode
+    "decodes a run-length-encoded string"
+    [cipher-text]
+    (str/replace cipher-text #"(\d+)(\D)"
+                 (fn [[_ c l]] (apply str (repeat (read-string c) l)))))
 
   nil)
