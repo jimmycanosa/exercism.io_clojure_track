@@ -24,3 +24,22 @@
   end is not given, the whole song from start is sung."
   ([start] (sing start 0))
   ([start end] (join "\n" (map verse (range start (dec end) -1)))))
+
+(comment ;; another solution
+  (ns beer
+    (:require [clojure.string :refer [join]]))
+
+  (defn verse [n]
+    (cond
+      (= 0 n) "No more bottles of beer on the wall, no more bottles of beer.\nGo to the store and buy some more, 99 bottles of beer on the wall.\n"
+      (= 1 n) "1 bottle of beer on the wall, 1 bottle of beer.\nTake it down and pass it around, no more bottles of beer on the wall.\n"
+      :else   (str n " bottles of beer on the wall, " n " bottles of beer.\nTake one down and pass it around, " (dec n) " " (if (= 1 (dec n)) "bottle" "bottles") " of beer on the wall.\n")))
+
+  (defn sing
+    ([vs] (sing vs 0))
+    ([vs ve]
+     (->> (range vs (dec ve) -1)
+          (map verse)
+          (join "\n"))))
+  
+  nil)
